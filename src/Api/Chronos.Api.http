@@ -1,6 +1,31 @@
-@Chronos.Api_HostAddress = http://localhost:5190
-
-GET {{Chronos.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+@token = ""
 
 ###
+# 1. Register a new user
+POST https://{{Api_HostAddress}}/api/users/register
+Content-Type: application/json
+
+{
+  "email": "test-user-auth@example.com",
+  "password": "Password123!"
+}
+
+###
+# 2. Login and capture the JWT token
+# @name loginRequest
+POST https://{{Api_HostAddress}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "test-user-auth@example.com",
+  "password": "Password123!"
+}
+
+> {%
+    client.global.set("token", response.body.accessToken);
+%}
+
+###
+# 3. Access the protected endpoint using the captured token
+GET https://{{Api_HostAddress}}/api/users/me
+Authorization: Bearer {{token}}
