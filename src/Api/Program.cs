@@ -1,8 +1,10 @@
 using System.Text;
 using Chronos.Api.Middleware;
+using Chronos.Resources;
 using Chronos.Users;
 using Chronos.Users.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -14,6 +16,7 @@ var connectionString = builder.Configuration.GetConnectionString("Postgres");
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
 builder.Services.AddUsersModule(connectionString!);
+builder.Services.AddResourcesModule(connectionString!);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
@@ -70,5 +73,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope()) {
+    var usersDbContext = scope.ServiceProvider.GetRequiredService<Chronos.Users.Infrastructure.UsersDbContext>();
+    usersDbContext.Database.Migrate();
+    
+    var resourcesDbContext = scope.ServiceProvider.GetRequiredService<Chronos.Resources.Infrastructure.ResourcesDbContext>();
+    resourcesDbContext.Database.Migrate();
+}
 
 app.Run();
