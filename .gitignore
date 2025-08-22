@@ -76,3 +76,6 @@ lerna-debug.log*
 # Coverage reports
 coverage/
 *.cobertura.xml
+
+*.py
+*.txt
