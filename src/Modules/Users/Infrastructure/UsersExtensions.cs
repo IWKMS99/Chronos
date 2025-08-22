@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Chronos.Modules.Users.Infrastructure;
 
 public static class UsersExtensions {
-    public static IServiceCollection AddUsersModule(this IServiceCollection services, IConfiguration configuration) {
+    public static IServiceCollection AddUsersModule(this IServiceCollection services, IConfiguration configuration, string connectionString) {
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IJwtProvider, JwtProvider>();
 
@@ -20,7 +20,6 @@ public static class UsersExtensions {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
             typeof(Chronos.Modules.Users.Application.IUsersModuleApi).Assembly));
 
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<UsersDbContext>(options =>
             options.UseNpgsql(connectionString));
 
