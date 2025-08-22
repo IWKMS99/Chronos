@@ -1,7 +1,7 @@
-﻿using Chronos.Modules.Users.Domain;
+﻿using Chronos.Users.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Chronos.Modules.Users.Infrastructure.Persistence;
+namespace Chronos.Users.Infrastructure;
 
 public class UsersDbContext : DbContext {
     public DbSet<User> Users { get; set; }
@@ -10,6 +10,11 @@ public class UsersDbContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.HasDefaultSchema("users");
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(UsersDbContext).Assembly);
+        
+        var user = modelBuilder.Entity<User>();
+        user.HasKey(u => u.Id);
+        user.HasIndex(u => u.Email).IsUnique();
+        user.Property(u => u.Email).IsRequired();
+        user.Property(u => u.PasswordHash).IsRequired();
     }
 }
