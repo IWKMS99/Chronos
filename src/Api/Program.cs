@@ -1,4 +1,5 @@
 using System.Text;
+using Chronos.Api.Middleware;
 using Chronos.Users;
 using Chronos.Users.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -55,6 +56,8 @@ builder.Services.AddSwaggerGen(options => {
     });
 });
 var app = builder.Build();
+
+app.UseCustomExceptionHandler();
 
 if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
