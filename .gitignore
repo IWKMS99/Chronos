@@ -1,0 +1,78 @@
+﻿# This file is for ignoring files and directories in a .NET project.
+# It's a combination of common patterns for Visual Studio, Rider, and the .NET CLI.
+
+## General
+*.swp
+*~
+*.bak
+*.tmp
+*.log
+
+## Operating System Files
+.DS_Store
+Thumbs.db
+
+## IDE Directories and Files ###
+
+# Rider
+.idea/
+*.iml
+atlassian-ide-plugin.xml
+ReSharper.user
+*.resharper.user
+*.[Rr]e[Ss]harper
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Build Artifacts ###
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
+[Tt]est[Rr]esults/
+
+## .NET Core user secrets ##
+secrets.json
+usersecrets.xml
+/secrets/
+
+## Project-specific files ##
+*.DotSettings.user
+
+## Nuget Packages ##
+# NuGet packages folder - for packages.config projects
+packages/
+# NuGet lock file
+project.lock.json
+
+# If you are using Paket, you can uncomment the following lines
+# .paket/paket.exe
+# paket-files/
+
+## Other ##
+# Build server artifacts
+_ReSharper.Chronos/
+*.nupkg
+
+# Node.js dependencies (if you ever add a frontend project)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Coverage reports
+coverage/
+*.cobertura.xml
